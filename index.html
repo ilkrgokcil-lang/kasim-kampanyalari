@@ -203,7 +203,7 @@ const BRANDS=[
  {id:"houseofsuperstep",name:"HOUSE OF SUPERSTEP",tint:"#5a2a34",c:{"1111":"11.11 · Sepette %50'ye varan",bf:"Black Friday · %50'ye varan"}},
  {id:"nautica",name:"NAUTICA",tint:"#6b5450",c:{"1111":"11.11 · %30'a varan",bf:"Black Week · %30'a varan"}},
  {id:"gant",name:"GANT",tint:"#7a1a2c",c:{"1111":"11.11 · Sepette %20",bf:"Black Week · Sepette %20"}},
- {id:"converse",name:"CONVERSE",tint:"#5a5650",c:{"1111":"Singles' Day · %11 indirim",bf:"Black Friday · %20 indirim"}},
+ {id:"converse",name:"CONVERSE",v:"_2",tint:"#5a5650",c:{"1111":"Singles' Day · %11 indirim",bf:"Black Friday · %20 indirim"}},
  {id:"intersport",name:"INTERSPORT",tint:"#5a1a22",fit:["1111","bf"],c:{"1111":"11.11 · Sepette %50'ye varan",bf:"Black Friday · %50'ye varan"}},
  {id:"superkids",name:"SUPERKIDS",tint:"#8a6a20",c:{"1111":"11.11 · Sepette %50'ye varan",bf:"Black Friday · %50'ye varan"}},
  {id:"occasion",name:"OCCASION",tint:"#6a2420",c:{"1111":"Kasım Festivali · %70'e varan"}}
@@ -213,12 +213,12 @@ const VIDEOS=[
  {brand:"converse",k:"1111",file:"v_converse_1111",c:"Singles' Day"},
  {brand:"fashfed",k:"1111",file:"v_fashfed_1111_teaser",c:"Geri sayım teaser"},
  {brand:"fashfed",k:"1111",file:"v_fashfed_1111",c:"%40'a varan indirim"},
- {brand:"gant",k:"bf",file:"v_gant_bf",c:"%30'a varan indirim"},
+ {brand:"gant",k:"bf",file:"v_gant_bf2",c:"Sepette %20 indirim"},
  {brand:"intersport",k:"1111",file:"v_intersport_1111_mobil",c:"Sepette %50'ye varan"},
  {brand:"intersport",k:"1111",file:"v_intersport_1111_yatay",c:"6 Kasım duyurusu"},
  {brand:"lacoste",k:"1111",file:"v_lacoste_1111_teaser",c:"Singles' Day teaser"},
- {brand:"lacoste",k:"bf",file:"v_lacoste_bf",c:"Croco Friday · net %20"},
- {brand:"nautica",k:"1111",file:"v_nautica_1111",c:"%30'a varan indirim"},
+ {brand:"lacoste",k:"bf",file:"v_lacoste_bf2",c:"Croco Friday · 2 ve üzeri %20"},
+ {brand:"nautica",k:"1111",file:"v_nautica_1111b",c:"%30'a varan indirim"},
  {brand:"nautica",k:"bf",file:"v_nautica_bf",c:"Black Week"},
  {brand:"occasion",k:"1111",file:"v_occasion_1111",c:"Kasım Festivali · %70'e varan"},
  {brand:"superstep",k:"1111",file:"v_superstep_1111_teaser1",c:"Geri sayım teaser"},
@@ -242,7 +242,7 @@ let imgCount=0;
 BRANDS.forEach((b,i)=>{
   const keys=KEYS.filter(k=>b.c[k]);imgCount+=keys.filter(k=>!(b.video&&b.video.includes(k))).length;
   const a=document.createElement("a");a.href="#"+b.id;
-  a.innerHTML=`<img src="img/${b.id}_${keys[0]}.jpg" alt="${b.name} ${LABEL[keys[0]]} görseli" loading="lazy"><span lang="en">${b.name}</span>`;
+  a.innerHTML=`<img src="img/${b.id}_${keys[0]}${b.v||""}.jpg" alt="${b.name} ${LABEL[keys[0]]} görseli" loading="lazy"><span lang="en">${b.name}</span>`;
   idx.appendChild(a);
   const notes=KEYS.filter(k=>!b.c[k]).map(k=>hasVideo(b.id,k)?`${LABEL[k]} videosu en sonda`:`${LABEL[k]} görseli yok`);
   const s=document.createElement("section");s.className="brand wrap";s.id=b.id;s.style.setProperty("--tint",b.tint);s.dataset.i=i;
@@ -250,7 +250,7 @@ BRANDS.forEach((b,i)=>{
    <div class="bhead"><h2 lang="en">${b.name}</h2></div>
    <div class="phone"><div class="screen">
      <div class="sbar"><span>11:11</span><span class="island"></span>${icons}</div>
-     <div class="slides" tabindex="0" aria-label="${b.name} görselleri">${keys.map(k=>`<div style="--poster:url(img/${b.id}_${k}.jpg)" class="slide${b.video&&b.video.includes(k)?" is-video":""}${b.fit&&b.fit.includes(k)?" is-fit":""}" data-k="${k}">${b.video&&b.video.includes(k)?`<video src="img/${b.id}_${k}.mp4" poster="img/${b.id}_${k}.jpg" muted loop playsinline preload="none" aria-label="${b.name} ${LABEL[k]} videosu"></video>`:`<img src="img/${b.id}_${k}.jpg" alt="${b.name} ${LABEL[k]} mobil görseli" loading="${i<2?"eager":"lazy"}" decoding="async">`}</div>`).join("")}</div>
+     <div class="slides" tabindex="0" aria-label="${b.name} görselleri">${keys.map(k=>`<div style="--poster:url(img/${b.id}_${k}${b.v||""}.jpg)" class="slide${b.video&&b.video.includes(k)?" is-video":""}${b.fit&&b.fit.includes(k)?" is-fit":""}" data-k="${k}">${b.video&&b.video.includes(k)?`<video src="img/${b.id}_${k}.mp4" poster="img/${b.id}_${k}.jpg" muted loop playsinline preload="none" aria-label="${b.name} ${LABEL[k]} videosu"></video>`:`<img src="img/${b.id}_${k}${b.v||""}.jpg" alt="${b.name} ${LABEL[k]} mobil görseli" loading="${i<2?"eager":"lazy"}" decoding="async">`}</div>`).join("")}</div>
      <div class="homebar"><i></i></div>
    </div></div>
    <div class="cap">
